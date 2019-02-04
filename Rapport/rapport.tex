@@ -50,7 +50,7 @@ A solution to this problem is of course a sequence $S$.\\
 Flipping one bit means transforming 1 into -1 (resp. -1 into 1).
 \section{Procedure for testing}
 \noindent
-All the results presented in this report are on average over 100 runs and most of them are done on a sequence of length 101. We chose 101 because the space is very large ($2^{101}$) solutions and thus, good solutions are less likely to appear randomly. Moreover, 101 is small enough to compute the merit factor relatively fast\footnote{Because most of the time is spent computing the merit factor}. As we generate the sequences and flip the bits randomly, we need the same environment for testing. Thus before each experiment, we use the same seed.\\
+All the results presented in this report are on average over 100 runs and most of them are done on a sequence of length 101. We chose 101 because the space is very large ($2^{101}$ solutions) and thus, good solutions are less likely to appear randomly. Moreover, 101 is small enough to compute the merit factor relatively fast\footnote{Because most of the time is spent computing the merit factor}. As we generate the sequences and flip the bits randomly, we need the same environment for testing. Thus before each experiment, we use the same seed.\\
 All algorithms are coded in Python and Cython and executed on a i5-5300U CPU @ 2.30GHz machine with 16Go of RAM. We have included in this report some pseudo code of the main algorithm but you can find each algorithm on this github webpage : AJOUTER GITHUB LINK
 \section{RLS (Random Local Search)}
 \subsection{Definition}
@@ -87,24 +87,24 @@ Few parameters can be tuned : the number of iterations and the number of bit to 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.25]{Images/rls_restart}
-\caption{Evolution of the merit factor algorithm with the RLS restart algorithm with $k=1$. We apply restart when the merit factor have not been improved for 3N iterations. We test 5 restart method : flipping 2,7,12 or 17}
+\caption{Evolution of the merit factor algorithm with the RLS restart algorithm with $k=1$. We apply restart when the merit factor have not been improved for 3N iterations. We test 5 restart method : flipping 2,7,12 or 17 or a whole new sequence}
 \label{fig:rls_restart}
 \end{center}
 \end{figure}
 \noindent
 We notice on fig \ref{fig:rls_nb_flip} that RLS algorithm stops making progress after some iterations because of this local maxima issue. Moreover, it seems that flipping more than 1 bit isn't effective.\\
-To overcome the local minima issue of the RLS algorithm, we can do some transformations to the solution as soon as we do not improve our current solution for a fixed number of iterations. We call this new algorithm : RLS restart. There are two kind of transformations that can be easily implemented : start with a new sequences or flip $k'$ bits of the current solution. We can easily see on fig \ref{fig:rls_restart} that restart by flipping 2 bits (instead of 1) gives the best results. It's probably because we don't modify the solution found so far too much. From another side, flipping more than 2 bits or generate a whole new sequence are less effective. Moreover, we observe on fig \ref{fig:rls_no_change} that restart too often isn't effective, it looks that restarting after 4N iterations gives the best results.
+To overcome the local minima issue of the RLS algorithm, we can do some transformations to the solution as soon as we do not improve our current solution for a fixed number of iterations. We call this new algorithm : RLS restart. There are two kind of transformations that can be easily implemented : start with a new sequence or flip $k'$ bits of the current solution. We can easily see on fig \ref{fig:rls_restart} that restart by flipping 2 bits (instead of 1) gives the best results. It's probably because we don't modify too much the solution found so far. On the other hand, flipping more than 2 bits or generating a whole new sequence are less effective. Moreover, we observe on fig \ref{fig:rls_no_change} that restarting too often isn't effective, it looks like restarting after 4N iterations gives the best results.
 \section{EA (Evolutionary algorithm)}
 \subsection{Definition}
 \noindent
-EA algorithm \cite{ea} is very close from the RLS one. However, rather than flipping a fixed number of bits per iteration, EA algorithm flips each bit independantly with a probability p.
+EA algorithm \cite{ea} is very close to the RLS one. However, rather than flipping a fixed number of bits per iteration, EA algorithm flips each bit independantly with a probability p.
 \begin{enumerate}
 \item Start with a random sequence which is your current solution
 \item Pick a random neighbour of the current solution by flipping each bit of the current solution with a probability p
 \begin{enumerate}
 \item If this neighbour has a better merit factor than the current solution, use this neighbour as your current solution
 \end{enumerate}
-\item Go back to step 2 until the number max of iterations is exceeded
+\item Go back to step 2 until the maximum number of iterations is exceeded
 \end{enumerate}
 \subsection{Tests}
 \begin{figure}[H]
@@ -115,11 +115,11 @@ EA algorithm \cite{ea} is very close from the RLS one. However, rather than flip
 \end{center}
 \end{figure}
 \noindent
-We notice (fig \ref{fig:ea_different_p})  that EA algorithm with $p=\frac{1}{N}$ performs slightly better than the RLS algorithm while it should have the same behaviour on average. With this algorithm, we take avantage of the random behaviour of the bit flipping. Indeed, in average, the algorithm should flip only 1 bits, but this is only an average behaviour and doesn't prevent the algorithm to sometimes flip more than one bit and escape from a local maxima. Regarding the other values of $p$, we can't say anything because the gap between each other isn't significant.
+We notice (fig \ref{fig:ea_different_p}) that EA algorithm with $p=\frac{1}{N}$ performs slightly better than the RLS algorithm while it should have the same behaviour on average. With this algorithm, we take avantage of the random behaviour of the bit flipping. Indeed, in average, the algorithm should flip only 1 bit, but this is only an average behaviour and doesn't prevent the algorithm to sometimes flip more than one bit and escape from a local maxima. Regarding the other values of $p$, we can't say anything because the gap between each other isn't significant.
 \section{Simulated Anealing}
 \subsection{Definition}
 \noindent
-For the RLS and EA algorithm, we were only accepting solutions which had a better merit factor than the current solution. Here \cite{sa}, we accept any neighbour which has a better merit factor but we also sometimes accept solutions which don't improve our current solution. However the probability $p$ that we accept a poorer solution evolves over time and depends also on the change of the merit factor.
+For the RLS and EA algorithm, we were only accepting solutions which had a better merit factor than the current solution. Here \cite{sa}, we accept any neighbour which has a better merit factor but we also sometimes accept solutions which don't improve our current solution. However the probability $p$ that we accept a poorer solution evolves over time and also depends on the change of the merit factor.
 \begin{equation}
 p=e^{(f_y-f_x)\cdot t}
 \end{equation}
@@ -136,7 +136,7 @@ From now on, we need to choose how t increases over time, mainly 3 solutions are
 \item Exponentially
 \item Logarithmically
 \end{itemize}
-Additionaly to the kind of growth of $t$, we need to choose $t_{max}$, which is the value of $t$ at the end of the algorithm (assuming we have a fixed number of iterations). This parameter is critical because a low value means often accepting poorer solutions and a high value means to never accept poorer solutions (i.e equivalent to RLS). We could have choosen not to bound $t$ but it would have been complicated to compare different kind of growth because the value at the end would have been completely different. So here is the algorithm :
+Additionally to the kind of growth of $t$, we need to choose $t_{max}$, which is the value of $t$ at the end of the algorithm (assuming we have a fixed number of iterations). This parameter is critical because a low value means often accepting poorer solutions and a high value means never  to accept poorer solutions (i.e equivalent to RLS). We could have choosen not to bound $t$ but it would have been complicated to compare different kinds of growth because the value at the end would have been completely different. So here is the algorithm :
 \begin{enumerate}
 \item Start with a random sequence which is your current solution $x$, compute its merit factor $f_x$
 \item Pick a neighbour $y$ of the current solution $x$ by flipping each bit of the current solution with a probability p
@@ -167,11 +167,11 @@ Additionaly to the kind of growth of $t$, we need to choose $t_{max}$, which is 
 \end{minipage}
 \end{figure}
 \noindent
-Fixing a low $t_{max}$ (i.e $\leq 13$) isn't productive and induces a slow growth (fig \ref{fig:sa_tmax}). Instead choosing the value of $t_{max}$ around 18 seems to be the right choice. Regarding the growth of $t$, a logarithmic growth gives quickly a good solution whereas the linear and exponential growths are way slower.
+Fixing a low $t_{max}$ (i.e $\leq 13$) isn't productive and induces a slow growth (fig \ref{fig:sa_tmax}). Instead, choosing the value of $t_{max}$ around 18 seems to be the right choice. Regarding the growth of $t$, a logarithmic growth quickly gives a good solution whereas the linear and exponential growths are way slower.
 \section{Monte Carlo Search}
 \subsection{Definition}
 \noindent
-A Monte Carlo tree search \cite{mc} is a heuristic which is often used in artifical intelligence in game such as Chess or Go. The aim of the heuristic is to find the next most promising move given a game state. A tree is created at the begining. Then we need to choose the node of the tree which is the most encouraging and add randomly leaves to this node (which are actually neighbours of this node).\\
+A Monte Carlo tree search \cite{mc} is a heuristic which is often used in artifical intelligence in games such as Chess or Go. The aim of the heuristic is to find the next most promising move given a game state. A tree is created at the beginning. Then we need to choose the node of the tree which is the most promising and add randomly leaves to this node (which are actually neighbours of this node).\\
 In our case, each node is a sequence, and we evaluate each node with its merit factor. The algorithm is :
 \begin{enumerate}
 \item Generate a sequence randomly and set it as the root of the tree
@@ -207,18 +207,18 @@ The "merit factor back" of a node is a value which takes into account its own me
 \begin{minipage}{.45\textwidth}
   \begin{center}
   \includegraphics[scale=0.21]{Images/mc_merit_factor_back}
-  \caption{Evolution of the merit factor with the Monte Carlo algorithm with different way to choose the next parent}
+  \caption{Evolution of the merit factor with the Monte Carlo algorithm with different ways to choose the next parent}
   \label{fig:mc_merit_factor_back}
   \end{center}
 \end{minipage}
 \end{figure}
 \noindent
-In the fig \ref{fig:mc_width_depth} and fig \ref{fig:mc_merit_factor_back}, we are not actually looking at the number of iterations but rather the number of nodes. Indeed, in the previous algorithms, we were only looking at 1 neighbour at a time but in this case we add a fixed number of neighbour at each iteration. So just reasoning about the number of iterations is biaised because we actually looking at way more solutions.\\
-Furthemore, it seems that the number of neighbours we add at each iteration is not a decisive argument. We notice on fig \ref{fig:mc_width_depth}, that adding one neighbour at a time is a bad idea. From another angle, the way we update our ancestors (fig \ref{fig:mc_merit_factor_back}) doesn't seem to have any importance. We can update the merit factor of a parent by taking the mean/median/max/min of the merit factor of its children and its own without too much consideration. However the metric used to choose the next node to add children to is more important (fig \ref{fig:mc_choose_children}). As expected, choosing a node on its merit factor is similar to the RLS algorithm. Apart of that, choosing the UCT value or the "merit factor back" seems to induces the same behaviour.
+In the fig \ref{fig:mc_width_depth} and fig \ref{fig:mc_merit_factor_back}, we are not actually looking at the number of iterations but rather the number of nodes. Indeed, in the previous algorithms, we were only looking at 1 neighbour at a time but in this case we add a fixed number of neighbours at each iteration. So reasoning only about the number of iterations is biaised because we are actually looking at way more solutions.\\
+Furthemore, it seems that the number of neighbours we add at each iteration is not a decisive argument. We notice on fig \ref{fig:mc_width_depth}, that adding one neighbour at a time is a bad idea. From another angle, the way we update our ancestors (fig \ref{fig:mc_merit_factor_back}) doesn't seem to have any importance. We can update the merit factor of a parent by taking the mean/median/max/min of the merit factor of its children and its own without too much consideration. However the metric used to choose the next node to add children to is more important (fig \ref{fig:mc_choose_children}). As expected, choosing a node on its merit factor is similar to the RLS algorithm. Apart of that, choosing the UCT value or the "merit factor back" seems to induce the same behaviour.
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.22]{Images/mc_choose_children}
-\caption{Evolution of the merit factor with the Monte Carlo algorithm by varying the way to choose the node to add children to (adding 20 neighbours at a time).}
+\caption{Evolution of the merit factor with the Monte Carlo algorithm by varying the way to choose the node to add a children to (adding 20 neighbours at a time).}
 \label{fig:mc_choose_children}
 \end{center}
 \end{figure}
@@ -239,7 +239,7 @@ Furthemore, it seems that the number of neighbours we add at each iteration is n
 \end{center}
 \end{figure}
 \noindent
-We have gather all the algorithms presented before with the best parameters found so far. The best algorithm seems to be the simulated anealing (fig \ref{fig:all_results}). However, this is only a mean over 50 runs, and it doesn't show the best value computed by each algorithm.\\
+We have gathered all the algorithms presented before with the best parameters found so far. The best algorithm seems to be the simulated anealing (fig \ref{fig:all_results}). However, this is only a mean over 50 runs, and it doesn't show the best value computed by each algorithm.\\
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
@@ -252,7 +252,7 @@ Best Merit Factor & 4.48 & 4.34 & 4.67 & 5.11 & 5.32\\
 Although the growth of the Monte Carlo algorithm seems slow compared to the other, it's actually the algorithm which finds the best solution.
 
 \subsection{Size of the instance}
-From the begining of this report, we are only testing with sequences of length 101. It would be interesting to see if the length of the sequence is actually important in the performance of an algorithm.
+Since the begining of this report, we have only been testing sequences of length 101. It would be interesting to see if the length of the sequence is actually important in the performance of an algorithm.
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.26]{Images/instance_size}
@@ -261,7 +261,7 @@ From the begining of this report, we are only testing with sequences of length 1
 \end{center}
 \end{figure}
 \noindent
-The instance size seems to actually matters. The simulated anealing algorithm to work quite well on small instances ($\leq 120$) but not so good on bigger instances.  From another angle, the RLS with restart algorithm seem on average not bad at all. Our choice to evaluate the algorithms on instance of size 101 is finally a good choice because (based on fig \ref{fig:instance_size}) it reflects an average behaviour.
+The instance size seems to actually matter. The simulated anealing algorithm to work quite well on small instances ($\leq 120$) but not so good on bigger instances.  From another angle, the RLS with restart algorithm seem on average not bad at all. Our choice to evaluate the algorithms on instance of size 101 is finally a good choice because (based on fig \ref{fig:instance_size}) it reflects an average behaviour.
 \subsection{CPU usage}
 The memory usage is almost non-existent because we are using only 2 ou 3 variables in the first four algorithms. In the Monte Carlo algorithm, the memory usage is a bit higher because we save the merit factor and the sequence for each node visited (but very low).\\
 Regarding the time spent by each algorithm, the first four algorithm spend almost the same time (0.5 seconds for 1000 iterations) but the Monte Carlo algorithm spend 7 times more time than the others.
@@ -274,7 +274,7 @@ Regarding the time spent by each algorithm, the first four algorithm spend almos
 \end{figure}
 \subsection{Make the sequence stationnary}
 \noindent
-The LABS problem tries to maximize the merit factor $M(S)$ of a sequence $S$. However this metric is too sensitive to change, meaning that if you change only one bit of the sequence, the result may be complitely different. This is a big issue because it makes the learning way more difficult.\\
+The LABS problem tries to maximize the merit factor $M(S)$ of a sequence $S$. However this metric is too sensitive to change, meaning that if you change only one bit of the sequence, the result may be completely different. This is a big issue because it makes the learning way more difficult.\\
 So the idea is to find another way (less volatile) to evaluate the quality of a solution. By looking at the best result into the github file (\url{https://github.com/borkob/git_labs/blob/master/results-2018/2016-labs-skew.txt}), we notice something quite surprising : all the sequences have something in common : the number of change. It's not easy to see it with this natural form. Howewer, it's obvious once you get your sequence stationary. A stationary sequence is a sequence whose probability distribution is invariant over time (to avoid seasonality for instance). A simple way to get a sequence $S=(s_1,...,s_N)$ to its stationary form is to do : $s_i=s_{i+k}-s_i$ where $k\in [1,N-k]$.\\
 And surprisingly, absolutely all the solutions of the file verify this equation :
 \begin{equation}
@@ -324,7 +324,7 @@ Unfortunetely, it seems on fig \ref{fig:rls_both_heuristics} that optimizing thi
 \DeclarePairedDelimiter\bra{\langle}{\rvert}
 \DeclarePairedDelimiter\ket{\lvert}{\rangle}
 \noindent
-Quantum algorithm can sometimes offer a great speedup compared to classical algorithms. In particular, the use of Grover algorithm \cite{search} and period finding algorithm are at the core of many quantum algorithms. In our case, the use of grover algorithm is well suited. Grover algorithm enables to look for an element in a set of $N$ elements in $O(\sqrt{N})$ instead of $N$ (which is a quadratic speedup).
+Quantum algorithm can sometimes offer a great speedup compared to classical algorithms. In particular, the use of Grover's algorithm \cite{search} and period finding algorithm are at the core of many quantum algorithms. In our case, the use of Grover's algorithm is well suited. Grover's algorithm enables to look for an element in a set of $N$ elements in $O(\sqrt{N})$ instead of $N$ (which is a quadratic speedup).
 Suppose we have an oracle $f$ :\\\\
 $f_i(j)=\left\{
 \begin{array}{l}
@@ -345,7 +345,8 @@ Here is the algorithm :
 \end{enumerate}
 This algorithm is extracted from the paper \cite{max_quantum}. Hence we are able to find the sequence with the maximum merit factor in $\sqrt{N}$ steps. The only requirement is to get a system of $n$ qubits and the oracle $f$.
 \section{Conclusion}
-This report is way longuer than expected but some informations needed to be explain. To conclude, we can't say that any heuristic developped in this report performs well. Actually, when we compare the results found by the algorithms and the optimal ones, the gap is huge. To ease the optimization, we thought that changing the optimization function (i.e merit factor) by another function would be useful but it didn't work as expected. Maybe some other heuristics perform better than these ones. Anyway, we think the use of quantum algorithm might be the solution to this problem.
+\noindent
+This report is way longer than expected but some informations needed to be explain. To conclude, we can't say that any heuristic developped in this report performs well. Actually, when we compare the results found by the algorithms and the optimal ones, the gap is huge. To ease the optimization, we thought that changing the optimization function (i.e merit factor) by another function would be useful but it didn't work as expected. Maybe some other heuristics perform better than these ones. Anyway, we think the use of quantum algorithm might be the solution to this problem.
 
 \newpage
 \section{Appendix}
@@ -368,7 +369,8 @@ Then for any length of sequence we can compute the Energy $E(S)$ and also the me
 
 \subsection{Linear Optimization}
 \label{linear_optim}
-We learned in the "Optimization" course that solving linear programs was way easier than solving integer ones. For this reason, computer scientist have often been focusing on solving the associate linear problem and then rounding the solution. Unfortunately, by doing so, you don't get an optimal solution. However, sometimes you can bound the approximation given by the rounding (a simple rounding for vertex cover give a 2 approximation).\\\\
+\noindent
+We have learned in the "Optimization" course that solving linear programs was way easier than solving integer ones. For this reason, computer scientist have often been focusing on solving the associate linear problem and then rounding the solution. Unfortunately, by doing so, you don't get an optimal solution. However, sometimes you can bound the approximation given by the rounding (a simple rounding for vertex cover give a 2 approximation).\\\\
 Programing in Python, there is a library named "scipy" which contains a solver to minimize a given function. The function just needs a initial guess and bound for each of the variables. In our case, the initial guess is just a random sequences of {-1,1} and the bounds are [-1,1] for each $s_i$. As our merit factor $M(S)$ have to be maximize, we just multiply the merit factor by -1. However the solution returned by the solver will not be a sequence of integers but a sequence of numbers between -1 and 1. Thus, the rounding scheme will be to round all values between -1 and 0 to -1 (resp. 0 and 1 to 1). \\\\
 \begin{figure}[H]
 \centering
