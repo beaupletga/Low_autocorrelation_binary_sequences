@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.11)  4 FEB 2019 19:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.11)  4 FEB 2019 20:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -802,7 +802,7 @@ File: lstlang1.sty 2015/06/04 1.6 listings language file
 ) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-<Images/rls_nb_flip.png, id=139, 1206.909pt x 625.1355pt>
+<Images/rls_nb_flip.png, id=140, 1206.909pt x 625.1355pt>
 File: Images/rls_nb_flip.png Graphic file (type png)
 
 <use Images/rls_nb_flip.png>
@@ -813,7 +813,7 @@ Overfull \hbox (22.25139pt too wide) in paragraph at lines 73--74
  [] 
  []
 
-<Images/rls_no_change.png, id=141, 1082.6046pt x 684.3969pt>
+<Images/rls_no_change.png, id=142, 1082.6046pt x 684.3969pt>
 File: Images/rls_no_change.png Graphic file (type png)
 
 <use Images/rls_no_change.png>
@@ -824,21 +824,21 @@ Overfull \hbox (27.38107pt too wide) in paragraph at lines 81--82
  [] 
  []
 
-<Images/rls_restart.png, id=142, 1030.5702pt x 682.2288pt>
+<Images/rls_restart.png, id=143, 1030.5702pt x 682.2288pt>
 File: Images/rls_restart.png Graphic file (type png)
 
 <use Images/rls_restart.png>
 Package pdftex.def Info: Images/rls_restart.png used on input line 89.
 (pdftex.def)             Requested size: 257.64192pt x 170.55678pt.
  [2 <./Images/rls_nb_flip.png> <./Images/rls_no_change.png>] <Images/ea_differe
-nt_p.png, id=162, 1211.9679pt x 609.9588pt>
+nt_p.png, id=164, 1211.9679pt x 609.9588pt>
 File: Images/ea_different_p.png Graphic file (type png)
 
 <use Images/ea_different_p.png>
 Package pdftex.def Info: Images/ea_different_p.png used on input line 112.
 (pdftex.def)             Requested size: 339.3487pt x 170.7873pt.
  [3 <./Images/rls_restart.png>] [4 <./Images/ea_different_p.png>] <Images/sa_tm
-ax.png, id=190, 1206.909pt x 588.2778pt>
+ax.png, id=192, 1206.909pt x 588.2778pt>
 File: Images/sa_tmax.png Graphic file (type png)
 
 <use Images/sa_tmax.png>
@@ -849,7 +849,7 @@ Overfull \hbox (34.31383pt too wide) in paragraph at lines 155--156
  [] 
  []
 
-<Images/sa_growth.png, id=191, 462.528pt x 346.896pt>
+<Images/sa_growth.png, id=193, 462.528pt x 346.896pt>
 File: Images/sa_growth.png Graphic file (type png)
 
 <use Images/sa_growth.png>
@@ -861,14 +861,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 191--196
  []
 
 [5 <./Images/sa_tmax.png> <./Images/sa_growth.png>]
-<Images/mc_width_depth.png, id=218, 1147.6476pt x 644.6484pt>
+<Images/mc_width_depth.png, id=220, 1147.6476pt x 644.6484pt>
 File: Images/mc_width_depth.png Graphic file (type png)
 
 <use Images/mc_width_depth.png>
 Package pdftex.def Info: Images/mc_width_depth.png used on input line 201.
 (pdftex.def)             Requested size: 241.0131pt x 135.38016pt.
 
-<Images/mc_merit_factor_back.png, id=219, 1128.8574pt x 647.5392pt>
+<Images/mc_merit_factor_back.png, id=221, 1128.8574pt x 647.5392pt>
 File: Images/mc_merit_factor_back.png Graphic file (type png)
 
 <use Images/mc_merit_factor_back.png>
@@ -876,14 +876,14 @@ Package pdftex.def Info: Images/mc_merit_factor_back.png used on input line 209
 .
 (pdftex.def)             Requested size: 237.06705pt x 135.98724pt.
 
-<Images/mc_choose_children.png, id=225, 1175.8329pt x 615.0177pt>
+<Images/mc_choose_children.png, id=227, 1175.8329pt x 615.0177pt>
 File: Images/mc_choose_children.png Graphic file (type png)
 
 <use Images/mc_choose_children.png>
 Package pdftex.def Info: Images/mc_choose_children.png used on input line 220.
 (pdftex.def)             Requested size: 258.68404pt x 135.3043pt.
 
-<Images/mc_tree.png, id=226, 1711.39375pt x 546.04pt>
+<Images/mc_tree.png, id=228, 1711.39375pt x 546.04pt>
 File: Images/mc_tree.png Graphic file (type png)
  <use Images/mc_tree.png>
 Package pdftex.def Info: Images/mc_tree.png used on input line 227.
@@ -891,7 +891,7 @@ Package pdftex.def Info: Images/mc_tree.png used on input line 227.
 
 [6 <./Images/mc_width_depth.png> <./Images/mc_merit_factor_back.png> <./Images/
 mc_choose_children.png>]
-<Images/all_results.png, id=239, 1082.6046pt x 566.5968pt>
+<Images/all_results.png, id=241, 1082.6046pt x 566.5968pt>
 File: Images/all_results.png Graphic file (type png)
 
 <use Images/all_results.png>
@@ -902,14 +902,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 241--243
 
  []
 
-<Images/instance_size.png, id=241, 1097.0586pt x 630.1944pt>
+<Images/instance_size.png, id=243, 1097.0586pt x 630.1944pt>
 File: Images/instance_size.png Graphic file (type png)
 
 <use Images/instance_size.png>
 Package pdftex.def Info: Images/instance_size.png used on input line 258.
 (pdftex.def)             Requested size: 285.2285pt x 163.84668pt.
  [7 <./Images/mc_tree.png> <./Images/all_results.png>] <Images/time_spent.png, 
-id=250, 920.7198pt x 554.3109pt>
+id=252, 920.7198pt x 554.3109pt>
 File: Images/time_spent.png Graphic file (type png)
 
 <use Images/time_spent.png>
@@ -927,7 +927,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 297--300
 
  []
 
-<Images/compare_mf_mae.png, id=261, 953.2413pt x 597.6729pt>
+<Images/compare_mf_mae.png, id=263, 953.2413pt x 597.6729pt>
 File: Images/compare_mf_mae.png Graphic file (type png)
 
 <use Images/compare_mf_mae.png>
@@ -938,7 +938,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 301--310
 
  []
 
-<Images/rls_both_heuristics.png, id=263, 1076.823pt x 608.5134pt>
+<Images/rls_both_heuristics.png, id=265, 1076.823pt x 608.5134pt>
 File: Images/rls_both_heuristics.png Graphic file (type png)
 
 <use Images/rls_both_heuristics.png>
@@ -970,7 +970,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 357--359
 
  []
 
-<Images/histo_linear_opti_rounded.png, id=292, 568.1225pt x 417.56pt>
+<Images/histo_linear_opti_rounded.png, id=293, 568.1225pt x 417.56pt>
 File: Images/histo_linear_opti_rounded.png Graphic file (type png)
 
 <use Images/histo_linear_opti_rounded.png>
@@ -978,7 +978,7 @@ Package pdftex.def Info: Images/histo_linear_opti_rounded.png used on input lin
 e 379.
 (pdftex.def)             Requested size: 198.84584pt x 146.14818pt.
 
-<Images/histo_linear_opti.png, id=293, 560.0925pt x 415.5525pt>
+<Images/histo_linear_opti.png, id=294, 560.0925pt x 415.5525pt>
 File: Images/histo_linear_opti.png Graphic file (type png)
 
 <use Images/histo_linear_opti.png>
@@ -1000,25 +1000,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 372--392
  []
 
 [11 <./Images/histo_linear_opti_rounded.png> <./Images/histo_linear_opti.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 411.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 407.
 
 [12]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 411.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 407.
  (./rapport.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 411.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 411.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 407.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 407.
 Package rerunfilecheck Info: File `rapport.out' has not changed.
 (rerunfilecheck)             Checksum: DB4AC5AE723B2730EBF14E7775AC7AE0;1660.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 411.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 407.
  ) 
 Here is how much of TeX's memory you used:
  10056 strings out of 494883
  144824 string characters out of 6178692
- 262490 words of memory out of 5000000
+ 262494 words of memory out of 5000000
  13101 multiletter control sequences out of 15000+600000
  13111 words of font info for 50 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
@@ -1038,10 +1034,10 @@ cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/
 texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on rapport.pdf (12 pages, 1623269 bytes).
+Output written on rapport.pdf (12 pages, 1623893 bytes).
 PDF statistics:
- 386 PDF objects out of 1000 (max. 8388607)
- 321 compressed objects within 4 object streams
+ 387 PDF objects out of 1000 (max. 8388607)
+ 322 compressed objects within 4 object streams
  107 named destinations out of 1000 (max. 500000)
  302 words of extra memory for PDF output out of 10000 (max. 10000000)
 

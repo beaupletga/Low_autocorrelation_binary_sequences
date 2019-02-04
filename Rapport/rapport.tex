@@ -51,7 +51,7 @@ Flipping one bit means transforming 1 into -1 (resp. -1 into 1).
 \section{Procedure for testing}
 \noindent
 All the results presented in this report are on average over 100 runs and most of them are done on a sequence of length 101. We chose 101 because the space is very large ($2^{101}$ solutions) and thus, good solutions are less likely to appear randomly. Moreover, 101 is small enough to compute the merit factor relatively fast\footnote{Because most of the time is spent computing the merit factor}. As we generate the sequences and flip the bits randomly, we need the same environment for testing. Thus before each experiment, we use the same seed.\\
-All algorithms are coded in Python and Cython and executed on a i5-5300U CPU @ 2.30GHz machine with 16Go of RAM. We have included in this report some pseudo code of the main algorithm but you can find each algorithm on this github webpage : AJOUTER GITHUB LINK
+All algorithms are coded in Python and Cython and executed on a i5-5300U CPU @ 2.30GHz machine with 16Go of RAM. We have included in this report some pseudo code of the main algorithm but you can find each algorithm on this github webpage : \url{https://github.com/beaupletga/Low_autocorrelation_binary_sequences}.
 \section{RLS (Random Local Search)}
 \subsection{Definition}
 \noindent
@@ -261,10 +261,10 @@ Since the begining of this report, we have only been testing sequences of length
 \end{center}
 \end{figure}
 \noindent
-The instance size seems to actually matter. The simulated anealing algorithm to work quite well on small instances ($\leq 120$) but not so good on bigger instances.  From another angle, the RLS with restart algorithm seem on average not bad at all. Our choice to evaluate the algorithms on instance of size 101 is finally a good choice because (based on fig \ref{fig:instance_size}) it reflects an average behaviour.
+The instance size seems to actually matter. The simulated anealing algorithm works quite well on small instances ($\leq 120$) but not so good on bigger instances. From another angle, the RLS with restart algorithm seems on average not bad at all. Our choice to evaluate the algorithms on instances of size 101 is finally a good choice because (based on fig \ref{fig:instance_size}) it reflects an average behaviour.
 \subsection{CPU usage}
-The memory usage is almost non-existent because we are using only 2 ou 3 variables in the first four algorithms. In the Monte Carlo algorithm, the memory usage is a bit higher because we save the merit factor and the sequence for each node visited (but very low).\\
-Regarding the time spent by each algorithm, the first four algorithm spend almost the same time (0.5 seconds for 1000 iterations) but the Monte Carlo algorithm spend 7 times more time than the others.
+The memory usage is almost non-existent because we are using only 3 variables in the first four algorithms. In the Monte Carlo algorithm, the memory usage is a bit higher because we save the merit factor and the sequence for each node visited (but very low).\\
+Regarding the time spent by each algorithm, the first four algorithm spend almost the same time (0.5 seconds for 1000 iterations) but the Monte Carlo algorithm lasts 7 times more time than the others.
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.26]{Images/time_spent}
@@ -275,7 +275,7 @@ Regarding the time spent by each algorithm, the first four algorithm spend almos
 \subsection{Make the sequence stationnary}
 \noindent
 The LABS problem tries to maximize the merit factor $M(S)$ of a sequence $S$. However this metric is too sensitive to change, meaning that if you change only one bit of the sequence, the result may be completely different. This is a big issue because it makes the learning way more difficult.\\
-So the idea is to find another way (less volatile) to evaluate the quality of a solution. By looking at the best result into the github file (\url{https://github.com/borkob/git_labs/blob/master/results-2018/2016-labs-skew.txt}), we notice something quite surprising : all the sequences have something in common : the number of change. It's not easy to see it with this natural form. Howewer, it's obvious once you get your sequence stationary. A stationary sequence is a sequence whose probability distribution is invariant over time (to avoid seasonality for instance). A simple way to get a sequence $S=(s_1,...,s_N)$ to its stationary form is to do : $s_i=s_{i+k}-s_i$ where $k\in [1,N-k]$.\\
+So the idea is to find another way (less volatile) to evaluate the quality of a solution. By looking at the best results into the github file (\url{https://github.com/borkob/git_labs/blob/master/results-2018/2016-labs-skew.txt}), we notice something quite surprising : all the sequences have something in common : the number of changes. It's not easy to see it with this natural form. Howewer, it's obvious once you get your sequence stationary. A stationary sequence is a sequence whose probability distribution is invariant over time (to avoid seasonality for instance). A simple way to get a sequence $S=(s_1,...,s_N)$ to its stationary form is to do : $s_i=s_{i+k}-s_i$ where $k\in [1,N-k]$.\\
 And surprisingly, absolutely all the solutions of the file verify this equation :
 \begin{equation}
 \sum_{i=1}^{N-k} |s_{i+k}-s_{i}|=N-k \;\, \forall k \; odd\; \in [1,N-1]
@@ -295,21 +295,21 @@ Thus, it might be better to optimize the mean absolute error of this sytem [\ref
 \label{eq:MAE}
 MAE(S)=\frac{1}{N-1}\sum_{k=1 \text{ and k odd}}^{N-1}|\sum_{i=1}^{N-k} |s_{i+k}-s_{i}|-(N-k)|
 \end{equation}
-We can't solve this system using a linear system solver nor the simplex algorithm because the system isn't linear (contains absolute values). So the heuristic seems to be the right choice.
+We can't solve this system using a linear system solver nor by using the simplex algorithm because the system isn't linear (contains absolute values). So the heuristic seems to be the right choice.
 Furthemore, we want to minimize this error, so we can apply the heuristics explained before by multiplying the result by -1 (to transform minimization into maximization).\\
 \subsubsection{Why optimizing this new function ?}
 \noindent
 However, let's take a step back. The reason we needed a new heuristic was to get a smooth heuristic which, ideally wouldn't be too volatile. So we need to check wether or not it's the case.\\
-In order to test it, we generated 10000 sequences of length 101. For each of these sequences, we flip on bit randomly and comparate the value of the MAE before and after flipping one bit.\\
+In order to test it, we generated 10000 sequences of length 101. For each of these sequences, we flip one bit randomly and comparate the value of the MAE before and after flipping one bit.\\
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.2]{Images/compare_mf_mae}
-\caption{Comparison of the gap for a sequence before and after flipping one bit. Both metrics have been normalize ($\bar{x}=\frac{x-min}{max-min}$)}.
+\caption{Comparison of the gap for a sequence before and after flipping one bit. Both metrics have been normalized ($\bar{x}=\frac{x-min}{max-min}$)}.
 \label{fig:compare_mf_mae}
 \end{center}
 \end{figure}
 \noindent
-On fig \ref{fig:compare_mf_mae}, we notice that flipping one bit changes even more the MAE function. Thus, our new heuristic is even worse than the merit factor function. The only benefit of this function is that in average over 10000 runs, it takes twice less time to compute it than the merit factor. Although, this new function doesn't seem to be a good choice, let's see how it performs.
+On fig \ref{fig:compare_mf_mae}, we notice that flipping one bit changes even more the MAE function. Thus, our new heuristic is even worse than the merit factor function. The only benefit of this function is that in average over 10000 runs, it takes twice less time to compute it than the merit factor. Although this new function doesn't seem to be a good choice, let's see how it performs.
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.22]{Images/rls_both_heuristics}
@@ -318,7 +318,7 @@ On fig \ref{fig:compare_mf_mae}, we notice that flipping one bit changes even mo
 \end{center}
 \end{figure}
 \noindent
-Unfortunetely, it seems on fig \ref{fig:rls_both_heuristics} that optimizing this new heuristic doesn't work at all. It may be explained by the lack of information. Indeed, we have $N$ unkwnown values but we only compute the mean over $\ceil{\frac{N-1}{2}}$ equations.\\
+Unfortunetely, it seems on fig \ref{fig:rls_both_heuristics} that optimizing this new heuristic doesn't work at all. It may be explained by the lack of information. Indeed, we have $N$ unknown values but we only compute the mean over $\ceil{\frac{N-1}{2}}$ equations.\\
 
 \subsection{Quantum application}
 \DeclarePairedDelimiter\bra{\langle}{\rvert}
@@ -335,7 +335,7 @@ $f_i(j)=\left\{
 where MF[i] is the merit factor of the sequence i\\\\
 Here is the algorithm :
 \begin{enumerate}
-\item Let n bet the length of the sequence and $N=2^n$ the number of states
+\item Let n be the length of the sequence and $N=2^n$ the number of states
 \item Choose an index $y \in \{0,..,N-1\}$
 \item Begin with the state $\ket{\phi}=\ket{0}\ket{y}$
 \item Get the state $\ket{\phi}=\frac{1}{\sqrt{N}}\sum_{i=0}^{N-1}\ket{i}\ket{y}$ by applying Hadamard transform on the first register
@@ -346,7 +346,7 @@ Here is the algorithm :
 This algorithm is extracted from the paper \cite{max_quantum}. Hence we are able to find the sequence with the maximum merit factor in $\sqrt{N}$ steps. The only requirement is to get a system of $n$ qubits and the oracle $f$.
 \section{Conclusion}
 \noindent
-This report is way longer than expected but some informations needed to be explain. To conclude, we can't say that any heuristic developped in this report performs well. Actually, when we compare the results found by the algorithms and the optimal ones, the gap is huge. To ease the optimization, we thought that changing the optimization function (i.e merit factor) by another function would be useful but it didn't work as expected. Maybe some other heuristics perform better than these ones. Anyway, we think the use of quantum algorithm might be the solution to this problem.
+This report is much longer than expected but some informations needed to be explained. To conclude, we can't say that any heuristic developped in this report performs well. Actually, when we compare the results found by the algorithms and the optimal ones, the gap is huge. To ease the optimization, we thought that changing the optimization function (i.e merit factor) by another function would be useful but it didn't work as expected. Maybe some other heuristics perform better than these ones. Anyway, we think the use of quantum algorithm might be the solution to this problem.
 
 \newpage
 \section{Appendix}
@@ -370,8 +370,8 @@ Then for any length of sequence we can compute the Energy $E(S)$ and also the me
 \subsection{Linear Optimization}
 \label{linear_optim}
 \noindent
-We have learned in the "Optimization" course that solving linear programs was way easier than solving integer ones. For this reason, computer scientist have often been focusing on solving the associate linear problem and then rounding the solution. Unfortunately, by doing so, you don't get an optimal solution. However, sometimes you can bound the approximation given by the rounding (a simple rounding for vertex cover give a 2 approximation).\\\\
-Programing in Python, there is a library named "scipy" which contains a solver to minimize a given function. The function just needs a initial guess and bound for each of the variables. In our case, the initial guess is just a random sequences of {-1,1} and the bounds are [-1,1] for each $s_i$. As our merit factor $M(S)$ have to be maximize, we just multiply the merit factor by -1. However the solution returned by the solver will not be a sequence of integers but a sequence of numbers between -1 and 1. Thus, the rounding scheme will be to round all values between -1 and 0 to -1 (resp. 0 and 1 to 1). \\\\
+We have learned in the "Optimization" course that solving linear programs was way easier than solving integer ones. For this reason, computer scientists have often been focusing on solving the associated linear problem and then rounding the solution. Unfortunately, by doing so, you don't get an optimal solution. However, sometimes you can bound the approximation given by the rounding (a simple rounding for vertex cover give a 2 approximation).\\\\
+Programing in Python, there is a library named "scipy" which contains a solver to minimize a given function. The function just needs an initial guess and bounds for each of the variables. In our case, the initial guess is just a random sequences of {-1,1} and the bounds are [-1,1] for each $s_i$. As our merit factor $M(S)$ has to be maximize, we just multiply the merit factor by -1. However the solution returned by the solver will not be a sequence of integers but a sequence of numbers between -1 and 1. Thus, the rounding scheme will be to round all values between -1 and 0 to -1 (resp. 0 and 1 to 1). \\\\
 \begin{figure}[H]
 \centering
 \begin{minipage}{.45\textwidth}
@@ -391,8 +391,8 @@ Programing in Python, there is a library named "scipy" which contains a solver t
 \end{minipage}
 \end{figure}
 \noindent
-The optimal result in this case is 8.82. Unfortunately, our rounding method (fig \ref{fig:histo_linear_opti_rounded}) has poor results and find solutions with merit factor between 0 and 1.6. The not rounded solutions (fig \ref{fig:histo_linear_opti}) find results way better than the optimal integer one (around 14) which is normal because it solves a relaxed problem.\\
-\textbf{Although this method is incredibly fast (0.15s in average for sequences of length 101), it gives very poor results.}
+The optimal result in this case is 8.82. Unfortunately, our rounding method (fig \ref{fig:histo_linear_opti_rounded}) has poor results and find solutions with a merit factor between 0 and 1.6. The not rounded solutions (fig \ref{fig:histo_linear_opti}) find results way better than the optimal integer one (around 14) which is legit because it solves a relaxed problem.\\
+\textbf{Although this method is incredibly fast (0.15s in average for sequences of length 101), it yields very poor results.}
 
 \begin{thebibliography}{999}
 
@@ -402,10 +402,6 @@ The optimal result in this case is 8.82. Unfortunately, our rounding method (fig
 \bibitem{mc}Cameron Browne, Edward Powley, Daniel Whitehouse,\emph{ A Survey of Monte Carlo Tree Search Methods}.  
 \bibitem{max_quantum}Christoph Durr, Peter Høyer,\emph{A quantum algorithm for finding the minimum}.   
 \bibitem{search}LK Grover,\emph{A fast quantum mechanical algorithm for database search}. 
-
-
-
-
 \end{thebibliography}
 
 \end{document}
