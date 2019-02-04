@@ -1,0 +1,27 @@
+\BOOKMARK [1][-]{section.1}{Problem : Low autocorrelation binary sequences \(LABS\)}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Definition}{section.1}% 2
+\BOOKMARK [3][-]{subsubsection.1.1.1}{Vocabulary}{subsection.1.1}% 3
+\BOOKMARK [1][-]{section.2}{Procedure for testing}{}% 4
+\BOOKMARK [1][-]{section.3}{RLS \(Random Local Search\)}{}% 5
+\BOOKMARK [2][-]{subsection.3.1}{Definition}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.2}{Tests}{section.3}% 7
+\BOOKMARK [1][-]{section.4}{EA \(Evolutionary algorithm\)}{}% 8
+\BOOKMARK [2][-]{subsection.4.1}{Definition}{section.4}% 9
+\BOOKMARK [2][-]{subsection.4.2}{Tests}{section.4}% 10
+\BOOKMARK [1][-]{section.5}{Simulated Anealing}{}% 11
+\BOOKMARK [2][-]{subsection.5.1}{Definition}{section.5}% 12
+\BOOKMARK [2][-]{subsection.5.2}{Tests}{section.5}% 13
+\BOOKMARK [1][-]{section.6}{Monte Carlo Search}{}% 14
+\BOOKMARK [2][-]{subsection.6.1}{Definition}{section.6}% 15
+\BOOKMARK [2][-]{subsection.6.2}{Tests}{section.6}% 16
+\BOOKMARK [1][-]{section.7}{Analysis}{}% 17
+\BOOKMARK [2][-]{subsection.7.1}{Merit Factor}{section.7}% 18
+\BOOKMARK [2][-]{subsection.7.2}{Size of the instance}{section.7}% 19
+\BOOKMARK [2][-]{subsection.7.3}{CPU usage}{section.7}% 20
+\BOOKMARK [2][-]{subsection.7.4}{Make the sequence stationnary}{section.7}% 21
+\BOOKMARK [3][-]{subsubsection.7.4.1}{Why optimizing this new function ?}{subsection.7.4}% 22
+\BOOKMARK [2][-]{subsection.7.5}{Quantum application}{section.7}% 23
+\BOOKMARK [1][-]{section.8}{Conclusion}{}% 24
+\BOOKMARK [1][-]{section.9}{Appendix}{}% 25
+\BOOKMARK [2][-]{subsection.9.1}{Only ones}{section.9}% 26
+\BOOKMARK [2][-]{subsection.9.2}{Linear Optimization}{section.9}% 27
