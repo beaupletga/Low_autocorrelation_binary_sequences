@@ -20,12 +20,15 @@
 \gdef\HyperFirstAtBeginDocument#1{#1}
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{labs1}
+\citation{labs2}
 \select@language{french}
 \@writefile{toc}{\select@language{french}}
 \@writefile{lof}{\select@language{french}}
 \@writefile{lot}{\select@language{french}}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Problem : Low autocorrelation binary sequences (LABS)}{1}{section.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Definition}{1}{subsection.1.1}}
+\newlabel{eq:energy}{{2}{1}{Definition}{equation.1.2}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {1.1.1}Vocabulary}{1}{subsubsection.1.1.1}}
 \citation{rls}
 \@writefile{toc}{\contentsline {section}{\numberline {2}Procedure for testing}{2}{section.2}}
@@ -58,45 +61,40 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Tests}{6}{subsection.6.2}}
 \@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Evolution of the merit factor with the Monte Carlo algorithm with various values for the width and for the depth of the tree}}{6}{figure.7}}
 \newlabel{fig:mc_width_depth}{{7}{6}{Evolution of the merit factor with the Monte Carlo algorithm with various values for the width and for the depth of the tree}{figure.7}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Evolution of the merit factor with the Monte Carlo algorithm with different ways to choose the next parent}}{6}{figure.8}}
-\newlabel{fig:mc_merit_factor_back}{{8}{6}{Evolution of the merit factor with the Monte Carlo algorithm with different ways to choose the next parent}{figure.8}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Evolution of the merit factor with the Monte Carlo algorithm by varying the way to choose the node to add a children to (adding 20 neighbours at a time).}}{6}{figure.9}}
-\newlabel{fig:mc_choose_children}{{9}{6}{Evolution of the merit factor with the Monte Carlo algorithm by varying the way to choose the node to add a children to (adding 20 neighbours at a time)}{figure.9}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Example of tree with the Monte Carlo algorithm. The "merit factor back" is computed using the max of the children. The node with id=9 has the biggest merit factor. All the "merit factor back" of its ancestors take its value.}}{7}{figure.10}}
-\newlabel{fig:mc_tree}{{10}{7}{Example of tree with the Monte Carlo algorithm. The "merit factor back" is computed using the max of the children. The node with id=9 has the biggest merit factor. All the "merit factor back" of its ancestors take its value}{figure.10}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7}Analysis}{7}{section.7}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Merit Factor}{7}{subsection.7.1}}
-\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces Evolution of the merit factor with the following heuristics : RLS (number of flip=1), RLS with restart (number of flip=1,restart with 2 flips), EA(p=$\frac  {1}{N}$), Simulated Anealing (number of flip=1, $t_{max}=20$, growth=log), Monte Carlo Search (width=20)}}{7}{figure.11}}
-\newlabel{fig:all_results}{{11}{7}{Evolution of the merit factor with the following heuristics : RLS (number of flip=1), RLS with restart (number of flip=1,restart with 2 flips), EA(p=$\frac {1}{N}$), Simulated Anealing (number of flip=1, $t_{max}=20$, growth=log), Monte Carlo Search (width=20)}{figure.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Evolution of the merit factor with the Monte Carlo algorithm with different ways to compute the "merit factor back" (by taking the min/max/mean/median of the children)}}{6}{figure.8}}
+\newlabel{fig:mc_merit_factor_back}{{8}{6}{Evolution of the merit factor with the Monte Carlo algorithm with different ways to compute the "merit factor back" (by taking the min/max/mean/median of the children)}{figure.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Evolution of the merit factor with the Monte Carlo algorithm by varying the way to choose the node to add a children to (adding 20 neighbours at a time).}}{7}{figure.9}}
+\newlabel{fig:mc_choose_children}{{9}{7}{Evolution of the merit factor with the Monte Carlo algorithm by varying the way to choose the node to add a children to (adding 20 neighbours at a time)}{figure.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Example of tree with the Monte Carlo algorithm. The "merit factor back" is computed \textbf  {using the max} of the children. The node with id=9 has the biggest merit factor. All the "merit factor back" of its ancestors take its value.}}{7}{figure.10}}
+\newlabel{fig:mc_tree}{{10}{7}{Example of tree with the Monte Carlo algorithm. The "merit factor back" is computed \textbf {using the max} of the children. The node with id=9 has the biggest merit factor. All the "merit factor back" of its ancestors take its value}{figure.10}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Analysis}{8}{section.7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Merit Factor}{8}{subsection.7.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces Evolution of the merit factor with the following heuristics : RLS (number of flip=3), RLS with restart (number of flip=1,restart with 2 flips), EA(p=$\frac  {1}{N}$), Simulated Anealing (number of flip=1, $t_{max}=20$, growth=log), Monte Carlo Search (width=20)}}{8}{figure.11}}
+\newlabel{fig:all_results}{{11}{8}{Evolution of the merit factor with the following heuristics : RLS (number of flip=3), RLS with restart (number of flip=1,restart with 2 flips), EA(p=$\frac {1}{N}$), Simulated Anealing (number of flip=1, $t_{max}=20$, growth=log), Monte Carlo Search (width=20)}{figure.11}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Size of the instance}{8}{subsection.7.2}}
-\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Best merit factor found by all the algorithms by varying the size of the instance (i.e sequence).}}{8}{figure.12}}
-\newlabel{fig:instance_size}{{12}{8}{Best merit factor found by all the algorithms by varying the size of the instance (i.e sequence)}{figure.12}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}CPU usage}{8}{subsection.7.3}}
-\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces Time spent by each algorithm for 1000 iterations on average over 100 runs with instances with size from 10 to 200.}}{8}{figure.13}}
-\newlabel{fig:time_spent}{{13}{8}{Time spent by each algorithm for 1000 iterations on average over 100 runs with instances with size from 10 to 200}{figure.13}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}Make the sequence stationnary}{8}{subsection.7.4}}
-\newlabel{eq:MAE}{{8}{9}{Make the sequence stationnary}{equation.7.8}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.4.1}Why optimizing this new function ?}{9}{subsubsection.7.4.1}}
-\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces Comparison of the gap for a sequence before and after flipping one bit. Both metrics have been normalized ($\mathaccentV {bar}016{x}=\frac  {x-min}{max-min}$)}}{9}{figure.14}}
-\newlabel{fig:compare_mf_mae}{{14}{9}{Comparison of the gap for a sequence before and after flipping one bit. Both metrics have been normalized ($\bar {x}=\frac {x-min}{max-min}$)}{figure.14}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Best merit factor found by all the algorithms by varying the size of the instance (i.e sequence).}}{9}{figure.12}}
+\newlabel{fig:instance_size}{{12}{9}{Best merit factor found by all the algorithms by varying the size of the instance (i.e sequence)}{figure.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}CPU usage}{9}{subsection.7.3}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.3.1}Basic}{9}{subsubsection.7.3.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces Time spent by each algorithm for 1000 iterations on average over 100 runs with instances with size from 10 to 200.}}{9}{figure.13}}
+\newlabel{fig:time_spent}{{13}{9}{Time spent by each algorithm for 1000 iterations on average over 100 runs with instances with size from 10 to 200}{figure.13}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.3.2}Improvement}{9}{subsubsection.7.3.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}Make the sequence stationnary}{10}{subsection.7.4}}
+\newlabel{eq:MAE}{{11}{10}{Make the sequence stationnary}{equation.7.11}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.4.1}Why optimizing this new function ?}{10}{subsubsection.7.4.1}}
 \citation{search}
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces Comparison of the gap for a sequence before and after flipping one bit. Both metrics have been normalized ($\mathaccentV {bar}016{x}=\frac  {x-min}{max-min}$)}}{11}{figure.14}}
+\newlabel{fig:compare_mf_mae}{{14}{11}{Comparison of the gap for a sequence before and after flipping one bit. Both metrics have been normalized ($\bar {x}=\frac {x-min}{max-min}$)}{figure.14}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces Evolution of the merit factor with RLS when optimizing the merit factor, the MAE just mentioned before and the mean of both.}}{11}{figure.15}}
+\newlabel{fig:rls_both_heuristics}{{15}{11}{Evolution of the merit factor with RLS when optimizing the merit factor, the MAE just mentioned before and the mean of both}{figure.15}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.5}Quantum application}{11}{subsection.7.5}}
 \citation{max_quantum}
-\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces Evolution of the merit factor with RLS when optimizing the merit factor, the MAE just mentioned before and the mean of both.}}{10}{figure.15}}
-\newlabel{fig:rls_both_heuristics}{{15}{10}{Evolution of the merit factor with RLS when optimizing the merit factor, the MAE just mentioned before and the mean of both}{figure.15}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.5}Quantum application}{10}{subsection.7.5}}
-\@writefile{toc}{\contentsline {section}{\numberline {8}Conclusion}{10}{section.8}}
-\@writefile{toc}{\contentsline {section}{\numberline {9}Appendix}{11}{section.9}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {9.1}Only ones}{11}{subsection.9.1}}
-\newlabel{only_ones}{{9.1}{11}{Only ones}{subsection.9.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {9.2}Linear Optimization}{11}{subsection.9.2}}
-\newlabel{linear_optim}{{9.2}{11}{Linear Optimization}{subsection.9.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {16}{\ignorespaces Histogram of the merit factor values on a sequence of length 101 using the rounding scheme.}}{11}{figure.16}}
-\newlabel{fig:histo_linear_opti_rounded}{{16}{11}{Histogram of the merit factor values on a sequence of length 101 using the rounding scheme}{figure.16}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {17}{\ignorespaces Histogram of the merit factor values on a sequence of length 101 without rounding (with values between -1 and 1)}}{11}{figure.17}}
-\newlabel{fig:histo_linear_opti}{{17}{11}{Histogram of the merit factor values on a sequence of length 101 without rounding (with values between -1 and 1)}{figure.17}{}}
-\bibcite{rls}{1}
-\bibcite{ea}{2}
-\bibcite{sa}{3}
-\bibcite{mc}{4}
-\bibcite{max_quantum}{5}
-\bibcite{search}{6}
+\bibcite{labs1}{1}
+\bibcite{labs2}{2}
+\bibcite{rls}{3}
+\bibcite{ea}{4}
+\bibcite{sa}{5}
+\bibcite{mc}{6}
+\bibcite{max_quantum}{7}
+\bibcite{search}{8}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Conclusion}{12}{section.8}}

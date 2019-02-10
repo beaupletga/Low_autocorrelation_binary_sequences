@@ -18,10 +18,9 @@
 \BOOKMARK [2][-]{subsection.7.1}{Merit Factor}{section.7}% 18
 \BOOKMARK [2][-]{subsection.7.2}{Size of the instance}{section.7}% 19
 \BOOKMARK [2][-]{subsection.7.3}{CPU usage}{section.7}% 20
-\BOOKMARK [2][-]{subsection.7.4}{Make the sequence stationnary}{section.7}% 21
-\BOOKMARK [3][-]{subsubsection.7.4.1}{Why optimizing this new function ?}{subsection.7.4}% 22
-\BOOKMARK [2][-]{subsection.7.5}{Quantum application}{section.7}% 23
-\BOOKMARK [1][-]{section.8}{Conclusion}{}% 24
-\BOOKMARK [1][-]{section.9}{Appendix}{}% 25
-\BOOKMARK [2][-]{subsection.9.1}{Only ones}{section.9}% 26
-\BOOKMARK [2][-]{subsection.9.2}{Linear Optimization}{section.9}% 27
+\BOOKMARK [3][-]{subsubsection.7.3.1}{Basic}{subsection.7.3}% 21
+\BOOKMARK [3][-]{subsubsection.7.3.2}{Improvement}{subsection.7.3}% 22
+\BOOKMARK [2][-]{subsection.7.4}{Make the sequence stationnary}{section.7}% 23
+\BOOKMARK [3][-]{subsubsection.7.4.1}{Why optimizing this new function ?}{subsection.7.4}% 24
+\BOOKMARK [2][-]{subsection.7.5}{Quantum application}{section.7}% 25
+\BOOKMARK [1][-]{section.8}{Conclusion}{}% 26

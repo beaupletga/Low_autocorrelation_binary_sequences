@@ -24,7 +24,7 @@
 \lstset{language=Python}
 \section*{Abstract}
 \noindent
-This article focuses on optimizing the LABS problem. This is a problem where enumerating all the possible solutions isn't viable and the use of heuristic is necessary. Thus, we present in this report several ways to maximize the merit factor of the LABS problem. Although, this problem might seem very simple, the merit factor turns out to be quite difficult to optimize. Indeed it's highly non linear, extremely volatile\footnote{Changing one element in solution induces huge change into the merit factor} and contains many local maximum. Although we can't change the difficult nature of this problem, we can partially adapt our algorithm to be as good as possible.
+This article focuses on optimizing the LABS problem \cite{labs1,labs2}. This is a problem where enumerating all the possible solutions isn't viable and the use of heuristic is necessary. Thus, we present in this report several ways to maximize the merit factor of the LABS problem. Although, this problem might seem very simple, the merit factor turns out to be quite difficult to optimize. Indeed it's highly non linear, extremely volatile\footnote{Changing one element in solution induces huge change into the merit factor} and contains many local maximum. Although we can't change the difficult nature of this problem, we can partially adapt our algorithm to be as good as possible.
 \section{Problem : Low autocorrelation binary sequences (LABS)}
 \subsection{Definition}
 \noindent
@@ -34,6 +34,7 @@ C_k(S)=\sum_{i=1}^{N-k} s_is_{i+k}
 \end{equation}
 The energy of the sequence is defined as :
 \begin{equation}
+\label{eq:energy}
 E(S)=\sum_{k=1}^{N-1} C_k^2(S)
 \end{equation}
 Finally, the merit factor of a sequence is defined as :
@@ -41,7 +42,7 @@ Finally, the merit factor of a sequence is defined as :
 F(S)=\frac{N^2}{2E(S)}
 \end{equation}
 The low-autocorrelation binary sequences (LABS) problem is to find a sequence $S$ which maximizes the merit factor $F(S)$.\\
-In this report, we show several way to do it. The algorithms are presented by order of complexity. Several algorithms are included in the appendix [\ref{only_ones},\ref{linear_optim}] because they are not purely heuristic guided.
+In this report, we show several way to do it. The algorithms are presented by order of complexity.
 \subsubsection{Vocabulary}
 \noindent
 A sequences $S=(s_1,...,s_N)$ with $s_i\pm 1$ is a sequences of bits.\\
@@ -50,8 +51,8 @@ A solution to this problem is of course a sequence $S$.\\
 Flipping one bit means transforming 1 into -1 (resp. -1 into 1).
 \section{Procedure for testing}
 \noindent
-All the results presented in this report are on average over 100 runs and most of them are done on a sequence of length 101. We chose 101 because the space is very large ($2^{101}$ solutions) and thus, good solutions are less likely to appear randomly. Moreover, 101 is small enough to compute the merit factor relatively fast\footnote{Because most of the time is spent computing the merit factor}. As we generate the sequences and flip the bits randomly, we need the same environment for testing. Thus before each experiment, we use the same seed.\\
-All algorithms are coded in Python and Cython and executed on a i5-5300U CPU @ 2.30GHz machine with 16Go of RAM. We have included in this report some pseudo code of the main algorithm but you can find each algorithm on this github webpage : \url{https://github.com/beaupletga/Low_autocorrelation_binary_sequences}.
+All the results presented in this report are on average over 100 runs and most of them are done on a sequence of length 101. We chose 101 because the space is very large ($2^{101}$ solutions) and thus, good solutions are less likely to appear randomly. Moreover, 101 is small enough to compute the merit factor relatively fast\footnote{Because most of the time is spent computing the merit factor}. As we generate the sequences and flip the bits randomly, we need the same environment for testing. Thus before each experiment, we use the same seed. We don't evaluate the algorithms by running time but rather by number of iterations (i.e call to the merit factor function). This way, the code language or the device doesn't matter.\\
+First, all algorithms were coded in Python and Cython but we then changed to C\texttt{++} for speed reasons. There are executed on a i5-5300U CPU @ 2.30GHz machine with 16Go of RAM. We have included in this report some pseudo code of the main algorithm but you can find each algorithm on this github webpage : \url{https://github.com/beaupletga/Low_autocorrelation_binary_sequences}.
 \section{RLS (Random Local Search)}
 \subsection{Definition}
 \noindent
@@ -70,7 +71,7 @@ Few parameters can be tuned : the number of iterations and the number of bit to 
 \centering
 \begin{minipage}{.45\textwidth}
   \begin{center}
-  \includegraphics[scale=0.22]{Images/rls_nb_flip}
+  \includegraphics[scale=0.28]{Images/rls_nb_flip}
   \caption{Evolution of the merit factor with differents numbers of flips per iteration for the RLS algorithm.}
   \label{fig:rls_nb_flip}
   \end{center}
@@ -92,7 +93,7 @@ Few parameters can be tuned : the number of iterations and the number of bit to 
 \end{center}
 \end{figure}
 \noindent
-We notice on fig \ref{fig:rls_nb_flip} that RLS algorithm stops making progress after some iterations because of this local maxima issue. Moreover, it seems that flipping more than 1 bit isn't effective.\\
+We notice on fig \ref{fig:rls_nb_flip} that RLS algorithm stops making progress after some iterations because of this local maxima issue (when flipping one bit). It seems that flipping between 2 and 5 bits per iterations give the best results.
 To overcome the local minima issue of the RLS algorithm, we can do some transformations to the solution as soon as we do not improve our current solution for a fixed number of iterations. We call this new algorithm : RLS restart. There are two kind of transformations that can be easily implemented : start with a new sequence or flip $k'$ bits of the current solution. We can easily see on fig \ref{fig:rls_restart} that restart by flipping 2 bits (instead of 1) gives the best results. It's probably because we don't modify too much the solution found so far. On the other hand, flipping more than 2 bits or generating a whole new sequence are less effective. Moreover, we observe on fig \ref{fig:rls_no_change} that restarting too often isn't effective, it looks like restarting after 4N iterations gives the best results.
 \section{EA (Evolutionary algorithm)}
 \subsection{Definition}
@@ -124,7 +125,7 @@ For the RLS and EA algorithm, we were only accepting solutions which had a bette
 p=e^{(f_y-f_x)\cdot t}
 \end{equation}
 $f_x=$ Merit factor of the current solution $x$\\
-$f_y=$ Merit factor of a neighbour $y$ of our current solution $x$ ($f_x>f_y$)\\
+$f_y=$ Merit factor of a neighbour $y$ of our current solution $x$ ($f_x>f_y$)\\\\
 So, there are two factors which decrease the probability $p$ to take a neighbour $y$ which has a poorer merit factor :
 \begin{itemize}
 \item Its merit factor $f_y$ is way worse than our current merit factor $f_x$
@@ -158,16 +159,16 @@ Additionally to the kind of growth of $t$, we need to choose $t_{max}$, which is
   \end{center}
 \end{minipage}%
 \hfill
-\begin{minipage}{.45\textwidth}
+\begin{minipage}{.5\textwidth}
   \begin{center}
-  \includegraphics[scale=0.4]{Images/sa_growth}
+  \includegraphics[scale=0.23]{Images/sa_growth}
   \caption{Evolution of the merit factor with the simulated anealing algorithm with respect to the kind of growth for $t$ while $t_{max}=15$.}
   \label{fig:sa_growth}
   \end{center}
 \end{minipage}
 \end{figure}
 \noindent
-Fixing a low $t_{max}$ (i.e $\leq 13$) isn't productive and induces a slow growth (fig \ref{fig:sa_tmax}). Instead, choosing the value of $t_{max}$ around 18 seems to be the right choice. Regarding the growth of $t$, a logarithmic growth quickly gives a good solution whereas the linear and exponential growths are way slower.
+Fixing a low $t_{max}$ (i.e $\leq 13$) isn't productive and induces a slow growth (fig \ref{fig:sa_tmax}). Instead, choosing the value of $t_{max}$ around 18 seems to be the right choice. Regarding the growth of $t$ (fig \ref{fig:sa_growth}), a logarithmic growth quickly gives a good solution whereas the linear and exponential growths are way slower.
 \section{Monte Carlo Search}
 \subsection{Definition}
 \noindent
@@ -207,7 +208,7 @@ The "merit factor back" of a node is a value which takes into account its own me
 \begin{minipage}{.45\textwidth}
   \begin{center}
   \includegraphics[scale=0.21]{Images/mc_merit_factor_back}
-  \caption{Evolution of the merit factor with the Monte Carlo algorithm with different ways to choose the next parent}
+  \caption{Evolution of the merit factor with the Monte Carlo algorithm with different ways to compute the "merit factor back" (by taking the min/max/mean/median of the children)}
   \label{fig:mc_merit_factor_back}
   \end{center}
 \end{minipage}
@@ -225,7 +226,7 @@ Furthemore, it seems that the number of neighbours we add at each iteration is n
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.3]{Images/mc_tree}
-\caption{Example of tree with the Monte Carlo algorithm. The "merit factor back" is computed using the max of the children. The node with id=9 has the biggest merit factor. All the "merit factor back" of its ancestors take its value.}
+\caption{Example of tree with the Monte Carlo algorithm. The "merit factor back" is computed \textbf{using the max} of the children. The node with id=9 has the biggest merit factor. All the "merit factor back" of its ancestors take its value.}
 \label{fig:mc_tree}
 \end{center}
 \end{figure}
@@ -234,7 +235,7 @@ Furthemore, it seems that the number of neighbours we add at each iteration is n
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.35]{Images/all_results}
-\caption{Evolution of the merit factor with the following heuristics : RLS (number of flip=1), RLS with restart (number of flip=1,restart with 2 flips), EA(p=$\frac{1}{N}$), Simulated Anealing (number of flip=1, $t_{max}=20$, growth=log), Monte Carlo Search (width=20)}
+\caption{Evolution of the merit factor with the following heuristics : RLS (number of flip=3), RLS with restart (number of flip=1,restart with 2 flips), EA(p=$\frac{1}{N}$), Simulated Anealing (number of flip=1, $t_{max}=20$, growth=log), Monte Carlo Search (width=20)}
 \label{fig:all_results}
 \end{center}
 \end{figure}
@@ -245,13 +246,14 @@ We have gathered all the algorithms presented before with the best parameters fo
 \hline
   & RLS & RLS restart & EA & Simulated Anealing & Monte Carlo \\
 \hline
-Best Merit Factor & 4.48 & 4.34 & 4.67 & 5.11 & 5.32\\
+Best Merit Factor & 4.48 & 4.76 & 4.67 & 5.11 & 5.32\\
 \hline
 \end{tabular}
 \end{center}
 Although the growth of the Monte Carlo algorithm seems slow compared to the other, it's actually the algorithm which finds the best solution.
 
 \subsection{Size of the instance}
+\noindent
 Since the begining of this report, we have only been testing sequences of length 101. It would be interesting to see if the length of the sequence is actually important in the performance of an algorithm.
 \begin{figure}[H]
 \begin{center}
@@ -263,6 +265,8 @@ Since the begining of this report, we have only been testing sequences of length
 \noindent
 The instance size seems to actually matter. The simulated anealing algorithm works quite well on small instances ($\leq 120$) but not so good on bigger instances. From another angle, the RLS with restart algorithm seems on average not bad at all. Our choice to evaluate the algorithms on instances of size 101 is finally a good choice because (based on fig \ref{fig:instance_size}) it reflects an average behaviour.
 \subsection{CPU usage}
+\subsubsection{Basic}
+\noindent
 The memory usage is almost non-existent because we are using only 3 variables in the first four algorithms. In the Monte Carlo algorithm, the memory usage is a bit higher because we save the merit factor and the sequence for each node visited (but very low).\\
 Regarding the time spent by each algorithm, the first four algorithm spend almost the same time (0.5 seconds for 1000 iterations) but the Monte Carlo algorithm lasts 7 times more time than the others.
 \begin{figure}[H]
@@ -272,6 +276,21 @@ Regarding the time spent by each algorithm, the first four algorithm spend almos
 \label{fig:time_spent}
 \end{center}
 \end{figure}
+\subsubsection{Improvement}
+\noindent
+Computing again and again the merit factor for each sequence seems like a naïve approach. Re-computing the merit factor when changing only one bit of a sequence can be avoided. We compute the energy using the formula \ref{eq:energy} where for each $k \in [1,N-1]$, we compute $C_k(S)^2$ :
+\begin{equation}
+C_k(S)^2=(\sum_{i=1}^{N-k}s_is_{i+k})^2
+\end{equation}
+Only, we know the following remarkable identity :
+\begin{equation}
+(\sum_{i=1}^{N}x_i)^2 = \sum_{i=0}^Nx_i^2+2\sum_{i\neq j}^Nx_i x_j
+\end{equation}
+Thus we have :
+\begin{equation}
+C_k(S)=\underbrace{\sum_{i=1}^{N-k}(s_is_{i+k})^2}_\text{Doesn't change}+\underbrace{\sum_{i=1\text{,} i\neq j}^{N-k}s_is_{i+k}s_js_{j+k}}_\text{Changes}
+\end{equation}
+When flipping one bit, the first part of the equation won't change because of the square (and we are just multiplying by -1) and only the second part will change. After some experiments, computing only the second part of the $C_k(S)$ enables to compute the merit factor 14\% faster.
 \subsection{Make the sequence stationnary}
 \noindent
 The LABS problem tries to maximize the merit factor $M(S)$ of a sequence $S$. However this metric is too sensitive to change, meaning that if you change only one bit of the sequence, the result may be completely different. This is a big issue because it makes the learning way more difficult.\\
@@ -324,7 +343,7 @@ Unfortunetely, it seems on fig \ref{fig:rls_both_heuristics} that optimizing thi
 \DeclarePairedDelimiter\bra{\langle}{\rvert}
 \DeclarePairedDelimiter\ket{\lvert}{\rangle}
 \noindent
-Quantum algorithm can sometimes offer a great speedup compared to classical algorithms. In particular, the use of Grover's algorithm \cite{search} and period finding algorithm are at the core of many quantum algorithms. In our case, the use of Grover's algorithm is well suited. Grover's algorithm enables to look for an element in a set of $N$ elements in $O(\sqrt{N})$ instead of $N$ (which is a quadratic speedup).
+Quantum algorithm can sometimes offer a great speedup compared to classical algorithms. In particular, the use of Grover's algorithm \cite{search} and period finding algorithm are at the core of many quantum algorithms. In our case, the use of Grover's algorithm is well suited. Grover's algorithm enables to look for an element in a set of $N$ elements in $O(\sqrt{N})$ instead of $O(N)$ (which is a quadratic speedup).
 Suppose we have an oracle $f$ :\\\\
 $f_i(j)=\left\{
 \begin{array}{l}
@@ -348,54 +367,56 @@ This algorithm is extracted from the paper \cite{max_quantum}. Hence we are able
 \noindent
 This report is much longer than expected but some informations needed to be explained. To conclude, we can't say that any heuristic developped in this report performs well. Actually, when we compare the results found by the algorithms and the optimal ones, the gap is huge. To ease the optimization, we thought that changing the optimization function (i.e merit factor) by another function would be useful but it didn't work as expected. Maybe some other heuristics perform better than these ones. Anyway, we think the use of quantum algorithm might be the solution to this problem.
 
-\newpage
-\section{Appendix}
-\noindent
-We have put in here the first 2 algorithms which came to mind when optimizing the LABS problem.
-\subsection{Only ones}
-\label{only_ones}
-\noindent
-The first and naive approach we can use for this problem is to use only 1 (i.e -1). In this case, $C_k(S)=N-k$ for $k\in [0,N-1]$. Then we get :\\
-\begin{equation}
-\begin{split}
-E(S)&=\sum_{k=1}^{N-1}(N-k)^2\\
-&=\sum_{k=1}^{N-1}N^2+\sum_{k=1}^{N-1}k^2-\sum_{k=1}^{N-1}2\cdot N\cdot k\\
-&=(N-1)\cdot N^2+\frac{(N-1)N(2N-1)}{6}-2N\frac{N(N-1)}{2}\\
-&=\frac{(2(N-1)+1)(N-1)N}{6}
-\end{split}
-\end{equation}
-\noindent
-Then for any length of sequence we can compute the Energy $E(S)$ and also the merit factor $M(S)$. For instance, for this sequence : $S=11111$ (5 times one). We find $E(S)=30$ and $M(S)=0.41$. \textbf{This result is very poor compared to the optimal one : 6.25.}
-
-\subsection{Linear Optimization}
-\label{linear_optim}
-\noindent
-We have learned in the "Optimization" course that solving linear programs was way easier than solving integer ones. For this reason, computer scientists have often been focusing on solving the associated linear problem and then rounding the solution. Unfortunately, by doing so, you don't get an optimal solution. However, sometimes you can bound the approximation given by the rounding (a simple rounding for vertex cover give a 2 approximation).\\\\
-Programing in Python, there is a library named "scipy" which contains a solver to minimize a given function. The function just needs an initial guess and bounds for each of the variables. In our case, the initial guess is just a random sequences of {-1,1} and the bounds are [-1,1] for each $s_i$. As our merit factor $M(S)$ has to be maximize, we just multiply the merit factor by -1. However the solution returned by the solver will not be a sequence of integers but a sequence of numbers between -1 and 1. Thus, the rounding scheme will be to round all values between -1 and 0 to -1 (resp. 0 and 1 to 1). \\\\
-\begin{figure}[H]
-\centering
-\begin{minipage}{.45\textwidth}
-  \begin{center}
-  \includegraphics[scale=0.35]{Images/histo_linear_opti_rounded}
-  \caption{Histogram of the merit factor values on a sequence of length 101 using the rounding scheme.}
-  \label{fig:histo_linear_opti_rounded}
-  \end{center}
-\end{minipage}%
-\hfill
-\begin{minipage}{.45\textwidth}
-  \begin{center}
-  \includegraphics[scale=0.35]{Images/histo_linear_opti}
-  \caption{Histogram of the merit factor values on a sequence of length 101 without rounding (with values between -1 and 1)}
-  \label{fig:histo_linear_opti}
-  \end{center}
-\end{minipage}
-\end{figure}
-\noindent
-The optimal result in this case is 8.82. Unfortunately, our rounding method (fig \ref{fig:histo_linear_opti_rounded}) has poor results and find solutions with a merit factor between 0 and 1.6. The not rounded solutions (fig \ref{fig:histo_linear_opti}) find results way better than the optimal integer one (around 14) which is legit because it solves a relaxed problem.\\
-\textbf{Although this method is incredibly fast (0.15s in average for sequences of length 101), it yields very poor results.}
+%\newpage
+%\section{Appendix}
+%\noindent
+%We have put in here the first 2 algorithms which came to mind when optimizing the LABS problem.
+%\subsection{Only ones}
+%\label{only_ones}
+%\noindent
+%The first and naive approach we can use for this problem is to use only 1 (i.e -1). In this case, $C_k(S)=N-k$ for $k\in [0,N-1]$. Then we get :\\
+%\begin{equation}
+%\begin{split}
+%E(S)&=\sum_{k=1}^{N-1}(N-k)^2\\
+%&=\sum_{k=1}^{N-1}N^2+\sum_{k=1}^{N-1}k^2-\sum_{k=1}^{N-1}2\cdot N\cdot k\\
+%&=(N-1)\cdot N^2+\frac{(N-1)N(2N-1)}{6}-2N\frac{N(N-1)}{2}\\
+%&=\frac{(2(N-1)+1)(N-1)N}{6}
+%\end{split}
+%\end{equation}
+%\noindent
+%Then for any length of sequence we can compute the Energy $E(S)$ and also the merit factor $M(S)$. For instance, for this sequence : $S=11111$ (5 times one). We find $E(S)=30$ and $M(S)=0.41$. \textbf{This result is very poor compared to the optimal one : 6.25.}
+%
+%\subsection{Linear Optimization}
+%\label{linear_optim}
+%\noindent
+%We have learned in the "Optimization" course that solving linear programs was way easier than solving integer ones. For this reason, computer scientists have often been focusing on solving the associated linear problem and then rounding the solution. Unfortunately, by doing so, you don't get an optimal solution. However, sometimes you can bound the approximation given by the rounding (a simple rounding for vertex cover give a 2 approximation).\\\\
+%Programing in Python, there is a library named "scipy" which contains a solver to minimize a given function. The function just needs an initial guess and bounds for each of the variables. In our case, the initial guess is just a random sequences of {-1,1} and the bounds are [-1,1] for each $s_i$. As our merit factor $M(S)$ has to be maximize, we just multiply the merit factor by -1. However the solution returned by the solver will not be a sequence of integers but a sequence of numbers between -1 and 1. Thus, the rounding scheme will be to round all values between -1 and 0 to -1 (resp. 0 and 1 to 1). \\\\
+%\begin{figure}[H]
+%\centering
+%\begin{minipage}{.45\textwidth}
+%  \begin{center}
+%  \includegraphics[scale=0.35]{Images/histo_linear_opti_rounded}
+%  \caption{Histogram of the merit factor values on a sequence of length 101 using the rounding scheme.}
+%  \label{fig:histo_linear_opti_rounded}
+%  \end{center}
+%\end{minipage}%
+%\hfill
+%\begin{minipage}{.45\textwidth}
+%  \begin{center}
+%  \includegraphics[scale=0.35]{Images/histo_linear_opti}
+%  \caption{Histogram of the merit factor values on a sequence of length 101 without rounding (with values between -1 and 1)}
+%  \label{fig:histo_linear_opti}
+%  \end{center}
+%\end{minipage}
+%\end{figure}
+%\noindent
+%The optimal result in this case is 8.82. Unfortunately, our rounding method (fig \ref{fig:histo_linear_opti_rounded}) has poor results and find solutions with a merit factor between 0 and 1.6. The not rounded solutions (fig \ref{fig:histo_linear_opti}) find results way better than the optimal integer one (around 14) which is legit because it solves a relaxed problem.\\
+%\textbf{Although this method is incredibly fast (0.15s in average for sequences of length 101), it yields very poor results.}
 
 \begin{thebibliography}{999}
 
+\bibitem{labs1}Tom Packebusch and Stephan Mertens,\emph{Low autocorrelation binary sequences}. 
+\bibitem{labs2}Borko Boskovic, Franc Brglez,Janez Brest,\emph{Low autocorrelation binary sequences}. 
 \bibitem{rls}Frank Neumanna, Ingo Wegener,\emph{Randomized local search, evolutionary algorithms, and the minimum spanning tree problem}.  
 \bibitem{ea}Felix Streichert,\emph{Introduction to Evolutionary Algorithms}. 
 \bibitem{sa}Scott Kirkpatrick, C. D. Gelatt, Mario P. Vecchi,\emph{Optimization by simulated annealing}.
